@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { PencilLine } from "lucide-react"
+import { toast } from "sonner"
 
 interface User {
     firstName: string
@@ -49,7 +50,7 @@ export default function Page() {
 
     const handleSave = async () => {
         if (newPassword && newPassword !== confirmPassword) {
-            alert("Passwords do not match ❌");
+            toast.error("Passwords do not match ❌");
             return;
         }
 
@@ -76,9 +77,9 @@ export default function Page() {
             setNewPassword("");
             setConfirmPassword("");
             setIsEditing(false);
-            alert("Profile updated successfully ✅");
+            toast.success("Profile updated successfully ✅");
         } else {
-            alert("Failed to update ❌");
+            toast.error("Failed to update ❌");
         }
     };
 
@@ -103,7 +104,6 @@ export default function Page() {
                     )}
                 </div>
 
-                {/* Responsive grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-medium text-gray-700 dark:text-white">First Name</label>
