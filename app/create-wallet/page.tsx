@@ -29,9 +29,8 @@ export default function Page() {
         });
 
         if (res.ok) {
-            setTimeout(() => {
-                router.push("/dashboard");
-            }, 1000);
+            setLoading(false);
+            router.push("/dashboard");
         } else {
             setLoading(false);
         }
