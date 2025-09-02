@@ -33,12 +33,18 @@ interface Invoice {
     status: "pending" | "paid" | "unpaid"
 }
 
+interface ChartData {
+    date: string;
+    income: number;
+    expense: number;
+}
+
 export default function Page() {
     const [wallets, setWallets] = useState<Wallet[]>([]);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [invoices, setInvoices] = useState<Invoice[]>([]);
     const [filter, setFilter] = useState<"7d" | "30d" | "365d">("7d");
-    const [chartData, setChartData] = useState<any[]>([]);
+    const [chartData, setChartData] = useState<ChartData[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -180,7 +186,7 @@ export default function Page() {
                                     <Skeleton className="h-6 w-28 lg:w-10 mt-2 bg-gray-200 dark:bg-[#282541]" />
                                 ) : (
                                     <h2 className="text-[#1B212D] dark:text-white font-bold mt-2 text-lg sm:text-xl lg:text-md leading-tight break-words">
-                                        {wallet ? formatCurrency(totalIncome, wallet.currency) : "$0.00"}
+                                        {wallet ? formatCurrency(totalSaved, wallet.currency) : "$0.00"}
                                     </h2>
                                 )}
                             </div>

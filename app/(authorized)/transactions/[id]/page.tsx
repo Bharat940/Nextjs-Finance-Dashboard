@@ -15,9 +15,14 @@ interface Transaction {
     invoiceId?: { _id?: string; status?: string }
 }
 
+interface ApiError {
+    error: string
+}
+
+
 export default function Page() {
     const { id } = useParams()
-    const [transaction, setTransaction] = useState<Transaction | null>(null)
+    const [transaction, setTransaction] = useState<Transaction | ApiError | null>(null)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -40,7 +45,7 @@ export default function Page() {
         )
     }
 
-    if (!transaction || (transaction as any).error) {
+    if (!transaction || "error" in transaction) {
         return (
             <div className="flex justify-center items-center h-[60vh]">
                 <Card className="border border-red-200 bg-red-50/80 shadow-md rounded-xl p-6 text-center">
@@ -89,8 +94,8 @@ export default function Page() {
                         <span className="flex items-center gap-2 text-gray-600"><Receipt className="h-4 w-4" /> Invoice ID</span>
                         <span className="font-mono text-sm dark:text-gray-50">
                             <span className="font-mono text-sm dark:text-gray-50">
-                            maskInvoiceId(transaction.invoiceId?._id)
-                        </span>
+                                {transaction.invoiceId?._id}
+                            </span>
                         </span>
                     </div>
 

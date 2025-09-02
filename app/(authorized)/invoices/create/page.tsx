@@ -35,9 +35,13 @@ export default function Page() {
 
     const total = items.reduce((sum, i) => sum + i.amount, 0);
 
-    const handleItemChange = (index: number, field: keyof Item, value: string | number) => {
+    const handleItemChange = <K extends keyof Item>(
+        index: number,
+        field: K,
+        value: Item[K]
+    ) => {
         const newItems = [...items];
-        (newItems[index] as any)[field] = value;
+        newItems[index][field] = value;
 
         const orderNum = Number(newItems[index].order);
 

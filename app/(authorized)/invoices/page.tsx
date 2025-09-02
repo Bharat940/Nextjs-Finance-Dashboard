@@ -28,6 +28,15 @@ interface Invoice {
     status: "pending" | "paid" | "unpaid";
 }
 
+interface Transaction {
+    _id: string;
+    name: string;
+    type: string;
+    amount: number;
+    date: string;
+    invoiceId?: { status: string; _id?: string };
+}
+
 function SkeletonRow() {
     return (
         <tr>
@@ -75,7 +84,7 @@ function MobileSkeletonCard() {
 
 export default function Page() {
     const [invoices, setInvoices] = useState<Invoice[]>([]);
-    const [filtered, setFiltered] = useState<any[]>([]);
+    const [filtered, setFiltered] = useState<Invoice[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [filterBy, setFilterBy] = useState<"date" | "amount" | "status" | "">("");
@@ -177,7 +186,9 @@ export default function Page() {
             } else {
                 const existing = await fetch("/api/transactions")
                     .then((r) => r.json())
-                    .then((all) => all.find((t: any) => t.invoiceId?._id === updatedInvoice._id))
+                    .then((all: Transaction[]) =>
+                        all.find((t) => t.invoiceId?._id === updatedInvoice._id)
+                    )
 
 
                 if (existing) {

@@ -11,6 +11,7 @@ interface Wallet {
     balance: number;
     currency: string;
 }
+
 interface Transaction {
     _id: string;
     name: string;
@@ -67,7 +68,7 @@ function MobileSkeletonCard() {
 
 export default function Page() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
-    const [filtered, setFiltered] = useState<any[]>([]);
+    const [filtered, setFiltered] = useState<Transaction[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [wallets, setWallets] = useState<Wallet[]>([]);
