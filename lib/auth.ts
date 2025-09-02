@@ -4,12 +4,6 @@ import bcrypt from "bcryptjs";
 import { connectToDb } from "@/lib/mongodb";
 import User from "@/models/user.model";
 
-interface AppUser {
-    id: string;
-    email: string;
-    name: string;
-}
-
 export const authOptions: NextAuthOptions = {
     session: { strategy: "jwt" },
     providers: [
