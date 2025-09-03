@@ -9,14 +9,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export default function Page() {
     const [currency, setCurrency] = useState("USD");
     const [balance, setBalance] = useState(0);
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
+    // const router = useRouter();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -29,8 +29,7 @@ export default function Page() {
         });
 
         if (res.ok) {
-            setLoading(false);
-            router.push("/dashboard");
+            redirect("/dashboard");
         } else {
             setLoading(false);
         }
@@ -97,8 +96,8 @@ export default function Page() {
                         />
                     </div>
 
-                    <Button type="submit" className="w-full">
-                        Create Wallet
+                    <Button type="submit" className="w-full" disabled={loading}>
+                        {loading ? "Creating..." : "Create Wallet"}
                     </Button>
                 </form>
             )}
