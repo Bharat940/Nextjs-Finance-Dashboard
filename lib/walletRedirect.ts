@@ -7,14 +7,19 @@ export function useRequireWalletRedirect() {
   const pathname = usePathname();
 
   useEffect(() => {
-    let isMounted = true;
     const checkWallet = async () => {
       try {
         const res = await fetch("/api/wallets", { credentials: "include" });
         const wallets = await res.json();
 
         if (Array.isArray(wallets)) {
+          const onLoginOrRegister = pathname === "/login" || pathname === "/register";
+
           if (wallets.length === 0 && !pathname.startsWith("/create-wallet")) {
+            if (onLoginOrRegister) {
+              router.replace(`/create-wallet?redirect=${encodeURIComponent(pathname)}`);
+              return;
+            }
             router.replace(`/create-wallet?redirect=${encodeURIComponent(pathname)}`);
             return;
           }
@@ -32,7 +37,5 @@ export function useRequireWalletRedirect() {
     };
 
     checkWallet();
-
-    return () => { isMounted = false };
   }, [pathname, router]);
 }
