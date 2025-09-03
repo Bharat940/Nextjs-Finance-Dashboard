@@ -8,6 +8,7 @@ import { ChevronRight, Wallet, WalletMinimal } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { useRequireWalletRedirect } from "@/lib/walletRedirect"
 
 interface Wallet {
     _id: string
@@ -46,6 +47,8 @@ export default function Page() {
     const [filter, setFilter] = useState<"7d" | "30d" | "365d">("7d");
     const [chartData, setChartData] = useState<ChartData[]>([]);
     const [loading, setLoading] = useState(true);
+
+    useRequireWalletRedirect();
 
     useEffect(() => {
         const fetchData = async () => {

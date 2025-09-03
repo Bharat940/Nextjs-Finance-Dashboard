@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LucideSearch } from "lucide-react";
 import Link from "next/link";
+import { useRequireWalletRedirect } from "@/lib/walletRedirect";
 
 interface Wallet {
     _id: string;
@@ -22,6 +23,8 @@ interface Transaction {
 }
 
 function SkeletonRow() {
+    useRequireWalletRedirect();
+
     return (
         <tr>
             <td className="px-4 py-2">

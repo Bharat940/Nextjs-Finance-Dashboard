@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { PencilLine } from "lucide-react"
 import { toast } from "sonner"
+import { useRequireWalletRedirect } from "@/lib/walletRedirect"
 
 interface User {
     firstName: string
@@ -26,6 +27,8 @@ export default function Page() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+
+    useRequireWalletRedirect();
 
     useEffect(() => {
         const fetchUser = async () => {

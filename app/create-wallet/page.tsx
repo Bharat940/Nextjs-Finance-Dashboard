@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Button } from "@/components/ui/button";
@@ -11,12 +12,16 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { useRequireWalletRedirect } from "@/lib/walletRedirect"
+
 
 export default function Page() {
     const [currency, setCurrency] = useState("USD");
     const [balance, setBalance] = useState(0);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+
+    useRequireWalletRedirect();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -29,12 +34,10 @@ export default function Page() {
         });
 
         if (res.ok) {
-            setTimeout(() => {
-                router.replace("/dashboard");
-            }, 1000);
+            setLoading(false);
+            router.push("/dashboard");
         } else {
             setLoading(false);
-            console.error("Failed to create wallet");
         }
     };
 
@@ -99,8 +102,8 @@ export default function Page() {
                         />
                     </div>
 
-                    <Button type="submit" className="w-full" disabled={loading}>
-                        {loading ? "Creating..." : "Create Wallet"}
+                    <Button type="submit" className="w-full">
+                        Create Wallet
                     </Button>
                 </form>
             )}

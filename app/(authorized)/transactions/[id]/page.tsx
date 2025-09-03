@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRequireWalletRedirect } from "@/lib/walletRedirect"
 import { Loader2, Receipt, CalendarDays, User, DollarSign, FileText } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -24,6 +25,8 @@ export default function Page() {
     const { id } = useParams()
     const [transaction, setTransaction] = useState<Transaction | ApiError | null>(null)
     const [loading, setLoading] = useState(true)
+
+    useRequireWalletRedirect();
 
     useEffect(() => {
         if (!id) return

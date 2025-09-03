@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Search } from "lucide-react"
 import { Skeleton } from '@/components/ui/skeleton'
+import { useRequireWalletRedirect } from '@/lib/walletRedirect'
 
 interface Wallet {
     _id: string
@@ -38,6 +39,8 @@ export default function Page() {
     const [searchPayments, setSearchPayments] = useState("");
     const [searchInvoices, setSearchInvoices] = useState("");
     const [loading, setLoading] = useState(true);
+
+    useRequireWalletRedirect();
 
     useEffect(() => {
         const fetchData = async () => {

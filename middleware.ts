@@ -24,19 +24,6 @@ export async function middleware(req: NextRequest) {
         if (!token) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
-
-        const res = await fetch(new URL("/api/wallets", req.url), {
-            headers: { cookie: req.headers.get("cookie") || "" },
-        });
-        const wallets = await res.json();
-
-        if ((!wallets || wallets.length === 0) && !pathname.startsWith("/create-wallet")) {
-            return NextResponse.redirect(new URL("/create-wallet", req.url));
-        }
-
-        if (wallets && wallets.length > 0 && pathname.startsWith("/create-wallet")) {
-            return NextResponse.redirect(new URL("/dashboard", req.url));
-        }
     }
 
     return NextResponse.next();

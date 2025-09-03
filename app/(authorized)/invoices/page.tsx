@@ -12,6 +12,7 @@ import {
     DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { useRequireWalletRedirect } from "@/lib/walletRedirect";
 
 interface Wallet {
     _id: string;
@@ -89,6 +90,8 @@ export default function Page() {
     const [search, setSearch] = useState("");
     const [filterBy, setFilterBy] = useState<"date" | "amount" | "status" | "">("");
     const [wallets, setWallets] = useState<Wallet[]>([]);
+
+    useRequireWalletRedirect();
 
     useEffect(() => {
         fetch("/api/wallets").then((r) => r.json()).then(setWallets);

@@ -5,6 +5,7 @@ import { useParams } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Loader2, FileText, CalendarDays, User, DollarSign } from "lucide-react"
+import { useRequireWalletRedirect } from "@/lib/walletRedirect"
 
 interface Invoice {
     _id: string
@@ -19,6 +20,8 @@ export default function Page() {
     const { id } = useParams()
     const [invoice, setInvoice] = useState<Invoice | null>(null)
     const [loading, setLoading] = useState(true)
+
+    useRequireWalletRedirect();
 
     useEffect(() => {
         if (!id) return

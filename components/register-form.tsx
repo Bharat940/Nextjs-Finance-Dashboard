@@ -22,7 +22,6 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"form
         const email = (form.get("email") || "").toString().trim()
         const password = (form.get("password") || "").toString().trim()
 
-        // Client-side validation
         if (!name || !email || !password) {
             setErrors({
                 name: !name ? "Name is required" : undefined,
@@ -49,7 +48,6 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"form
 
             if (!res.ok) {
                 const data = await res.json()
-                // Map server error to field if possible
                 if (data.error.toLowerCase().includes("email")) {
                     setErrors({ email: data.error })
                 } else {
@@ -58,7 +56,6 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"form
                 return
             }
 
-            // Auto-login after successful registration
             const loginRes = await signIn("credentials", { email, password, redirect: false })
             if (loginRes?.error) {
                 if (loginRes.error.toLowerCase().includes("user")) {
@@ -69,7 +66,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"form
                     setErrors({ server: loginRes.error })
                 }
             } else {
-                router.push("/dashboard")
+                router.push("/create-wallet")
             }
         } catch (err) {
             console.error(err)

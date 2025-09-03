@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRequireWalletRedirect } from "@/lib/walletRedirect";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -32,6 +33,8 @@ export default function Page() {
         fetch("/api/wallets").then(r => r.json()).then(setWallets);
     }, []);
     const wallet = wallets[0];
+
+    useRequireWalletRedirect();
 
     const total = items.reduce((sum, i) => sum + i.amount, 0);
 
