@@ -29,9 +29,12 @@ export default function Page() {
         });
 
         if (res.ok) {
-            router.replace("/dashboard");
+            setTimeout(() => {
+                router.replace("/dashboard");
+            }, 1000);
         } else {
             setLoading(false);
+            console.error("Failed to create wallet");
         }
     };
 
